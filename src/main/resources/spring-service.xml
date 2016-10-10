@@ -1,0 +1,54 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd 
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd 
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd 
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        
+	<context:component-scan base-package="tv.love.service.impl" />
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	
+	<bean id="lovetvDataSourceAspect" class="tv.love.common.datasource.LovetvDataSourceAspect">
+    	<property name="masterLookupKey" value="master" />
+    	<property name="slaveLookupKey" value="slave" />
+    	<property name="defaultLookupKey" value="master" />
+    	<property name="queryMethodPrefix">
+    		<list>
+    			 <value>count</value>
+    			 <value>select</value>
+    			 <value>get</value>
+    			 <value>find</value>
+    			 <value>query</value>
+    			 <value>search</value>
+    			 <value>load</value>
+    		</list>
+    	</property>
+    </bean>
+    
+    <aop:config>
+    	<aop:aspect id="aspect" ref="lovetvDataSourceAspect">
+			<aop:pointcut expression="execution(* tv.love.service.*.*(..))" id="mapperPoint"/>  
+			<aop:around method="around" pointcut-ref="mapperPoint"/>
+			<!-- <aop:before method="before" pointcut-ref="mapperPoint"/>  -->
+    	</aop:aspect>
+    	
+    </aop:config>
+    
+    
+   
+    
+    
+	
+</beans>
