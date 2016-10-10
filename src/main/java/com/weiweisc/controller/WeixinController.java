@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.weiweisc.util.DateUtils;
 
@@ -14,7 +13,7 @@ import com.weiweisc.util.DateUtils;
 public class WeixinController extends BaseController{
 
 	
-	@RequestMapping(value="notice.wx",method={RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(value="notice.wx")
 	public void notice(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		
 		System.out.println("WeixinController.notice() - " + DateUtils.currentDate());
